@@ -64,7 +64,8 @@ async def root():
             <title>Bienvenue sur score credit</title>
         </head>
         <body>
-            <h1>Ce serveur apporte des informations sur les clients</h1>
+            <h1>Bienvenue dans le site crédit score/h1>
+            <h2>Ce serveur transmet des information sur la décision d'accordé un credit au client, des informations personnelles sur les clients voulants faire un emprunt.</h2>           
         </body>
     </html>
     """
