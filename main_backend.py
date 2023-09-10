@@ -64,7 +64,7 @@ async def root():
             <title>Bienvenue sur score credit</title>
         </head>
         <body>
-            <h1>Bienvenue dans le site crédit score/h1>
+            <h1>Bienvenue dans le site crédit score</h1>
             <h2>Ce serveur transmet des information sur la décision d'accordé un credit au client, des informations personnelles sur les clients voulants faire un emprunt.</h2>           
         </body>
     </html>
@@ -257,9 +257,9 @@ async def predict_decision(explain_id : Explain_id):
     return pd.DataFrame(tab_shap,index =df.SK_ID_CURR[:100] , columns=top_feature_names[:15])
 	
 def load_df():
-    #df_app_test = pd.read_csv('source/application_test.csv',sep=',')
+ 
     # Chemin absolu vers le répertoire contenant le fichier CSV
-    base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
+    base_dir = ""  
 
     # Chemin absolu complet du fichier CSV
 
@@ -280,11 +280,9 @@ def load_df():
 
 
 
-df_kernel = load_df()
 
-#df_train = laod_df()
+if __name__ == "__main__":
 
-#df_kernel = load_df()
-
-print('fin')   
+    df_kernel = load_df()
+    print('fin')   
 
