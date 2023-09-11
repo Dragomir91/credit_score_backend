@@ -72,14 +72,18 @@ async def root():
       
     return HTMLResponse(content=html_content, status_code=200)
 
-@app.get("/id_client")
-async def info_client(info_id: List_id):
+@app.get("/id_client")  
+async def info_client():
     df_kernel = load_df()
-    info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
+    #info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
     #print(info)
-    return info
+    #df = {"liste id" :df_kernel.loc[:101,'SK_ID_CURR'].values,
+            #"info_client" : df_kernel.columns[:101].values}
+    #print(pd.DataFrame(df))
+    return {"list_id" : list(df_kernel.loc[:101,'SK_ID_CURR']),
+            "infos_id" : list(df_kernel.columns[:101])}
 
-@app.post("/id_client/id")
+@app.post("/info_client/id")
 async def info_client2(info_id: Info_id):
     
     df_kernel = load_df()
