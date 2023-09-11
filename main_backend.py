@@ -61,10 +61,11 @@ async def root():
     html_content = """
     <html>
         <head>
-            <title>information utilisateur</title>
+            <title>Bienvenue sur score credit</title>
         </head>
         <body>
-            <h1>identifiants clients</h1>
+            <h1>Bienvenue dans le site crédit score</h1>
+            <h2>Ce serveur transmet des information sur la décision d'accordé un credit au client, des informations personnelles sur les clients voulants faire un emprunt.</h2>           
         </body>
     </html>
     """
@@ -73,9 +74,7 @@ async def root():
 
 @app.get("/id_client")
 async def info_client(info_id: List_id):
-    print('df_ker ______________________________')
     df_kernel = load_df()
-    print('df_ker:', df_kernel)
     info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
     #print(info)
     return info
@@ -104,7 +103,7 @@ async def predict_decision(pred_id : Predict_id):
 
     df_kernel = load_df()
 
-    base_dir = "/code/app" 
+    base_dir = "" 
     csv_file_path = os.path.join(base_dir, "model_lightgbm.pkl")
 
     
@@ -211,7 +210,7 @@ async def predict_decision(explain_id : Explain_id):
     df = df_kernel.replace([np.inf, -np.inf], np.nan)
     df.fillna(0,inplace=True) 
     # Chemin absolu vers le répertoire contenant le fichier CSV
-    base_dir = "/code/app"  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
+    base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
 
     # Chemin absolu complet du fichier CSV
     csv_file_path = os.path.join(base_dir, "model_lightgbm_shap.pkl")
@@ -258,19 +257,20 @@ async def predict_decision(explain_id : Explain_id):
     return pd.DataFrame(tab_shap,index =df.SK_ID_CURR[:100] , columns=top_feature_names[:15])
 	
 def load_df():
-    #df_app_test = pd.read_csv('source/application_test.csv',sep=',')
+ 
     # Chemin absolu vers le répertoire contenant le fichier CSV
-    base_dir = "/code/app"  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
+    base_dir = ""  
 
     # Chemin absolu complet du fichier CSV
 
   
-    csv_file_path = os.path.join(base_dir, "preprocessing/kernel_light.csv")
+    csv_file_path = os.path.join(base_dir, "kernel_light.csv")
 
     # Vérifier si le fichier existe
     if os.path.exists(csv_file_path):
         # Lire le fichier CSV
         df = pd.read_csv(csv_file_path,sep = ',')
+        print('file download')
         
         return df
     else:
@@ -280,11 +280,9 @@ def load_df():
 
 
 
-df_kernel = load_df()
 
-#df_train = laod_df()
+if __name__ == "__main__":
 
-#df_kernel = load_df()
-
-print('fin')   
+    df_kernel = load_df()
+    print('fin')   
 
