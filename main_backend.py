@@ -72,14 +72,14 @@ async def root():
       
     return HTMLResponse(content=html_content, status_code=200)
 
-@app.get("/id_client")
+@app.get("/id_client")  
 async def info_client():
     #df_kernel = load_df()
     #info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
     #print(info)
     return {"liste id" :['test']}
 
-@app.post("/id_client/id")
+@app.post("/info_client/id")
 async def info_client2(info_id: Info_id):
     
     df_kernel = load_df()
