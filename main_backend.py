@@ -80,7 +80,7 @@ async def info_client():
     #df = {"liste id" :df_kernel.loc[:101,'SK_ID_CURR'].values,
             #"info_client" : df_kernel.columns[:101].values}
     #print(pd.DataFrame(df))
-    return df_kernel.loc[:101,'SK_ID_CURR']
+    return {"list_id" :df_kernel.loc[:101,'SK_ID_CURR']}
 
 @app.post("/info_client/id")
 async def info_client2(info_id: Info_id):
