@@ -77,10 +77,10 @@ async def info_client():
     df_kernel = load_df()
     #info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
     #print(info)
-    df = {"liste id" :df_kernel.loc[:101,'SK_ID_CURR'].values,
-            "info_client" : df_kernel.columns[:101].values}
-    print(pd.DataFrame(df))
-    return pd.DataFrame(df).to_json()
+    #df = {"liste id" :df_kernel.loc[:101,'SK_ID_CURR'].values,
+            #"info_client" : df_kernel.columns[:101].values}
+    #print(pd.DataFrame(df))
+    return df_kernel.loc[:101,'SK_ID_CURR']
 
 @app.post("/info_client/id")
 async def info_client2(info_id: Info_id):
