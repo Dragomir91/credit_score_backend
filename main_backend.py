@@ -73,7 +73,7 @@ async def root():
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.get("/id_client")
-async def info_client(info_id: List_id):
+async def info_client():
     df_kernel = load_df()
     info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
     #print(info)
