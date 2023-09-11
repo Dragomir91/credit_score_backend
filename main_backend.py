@@ -74,7 +74,7 @@ async def root():
 
 @app.get("/id_client")
 async def info_client():
-    df_kernel = load_df()
+    #df_kernel = load_df()
     #info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
     #print(info)
     return {"liste id" :['test']}
