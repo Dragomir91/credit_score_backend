@@ -10,7 +10,7 @@ def test_load_df():
     df = pd.read_csv(csv_file_path)
 
     assert isinstance(df, pd.DataFrame)
-    assert len(df) == 0  # Vérifier que le DataFrame n'est pas vide
+    assert len(df) > 0  # Vérifier que le DataFrame n'est pas vide
     # Autres assertions selon votre cas d'utilisation
 
 # Exécutez pytest pour exécuter les tests
