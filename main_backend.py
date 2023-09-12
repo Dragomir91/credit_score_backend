@@ -165,16 +165,6 @@ async def predict_decision(ex_id : Predict_id):
 
     base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
 
-    # Chemin absolu complet du fichier CSV
-    csv_file_path = os.path.join(base_dir, "model_lightgbm_explainer.pkl")
-
-    print(csv_file_path)
-    with open(csv_file_path,'rb') as f:
-        lgbm_model = pickle.load(f)
-    
-    shap_ = lgbm_model(df_kernel.iloc[:10,2:],check_additivity=False)
-    
-    print('shap_value :', shap_.values)
     colonne = []
     
     for idx,i in enumerate(df_kernel.columns):
@@ -240,7 +230,7 @@ async def predict_decision(explain_id : Explain_id):
 
     # Obtenir les noms des variables
     feature_names = df_kernel.columns
-    feature_names = feature_names[3:]
+    feature_names = feature_names[2:]
 
     print('faet name : ', len(feature_names),sorted_indices[:15], len(shap_values.values))
 
