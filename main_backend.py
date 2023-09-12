@@ -104,7 +104,7 @@ async def predict_decision(pred_id : Predict_id):
 
     df_kernel = load_df()
 
-    base_dir = "/code/app" 
+    base_dir = "" 
     csv_file_path = os.path.join(base_dir, "model_lightgbm.pkl")
 
     
@@ -162,7 +162,7 @@ async def predict_decision(ex_id : Predict_id):
 
     df_kernel = load_df()
 
-    base_dir = "/code/app"  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
+    base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
 
     # Chemin absolu complet du fichier CSV
     csv_file_path = os.path.join(base_dir, "model_lightgbm_explainer.pkl")
@@ -223,7 +223,7 @@ async def predict_decision(explain_id : Explain_id):
     df = df_kernel.replace([np.inf, -np.inf], np.nan)
     df.fillna(0,inplace=True) 
     # Chemin absolu vers le répertoire contenant le fichier CSV
-    base_dir = "/code/app"  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
+    base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
 
     # Chemin absolu complet du fichier CSV
     csv_file_path = os.path.join(base_dir, "model_lightgbm_shap.pkl")
@@ -272,7 +272,7 @@ async def predict_decision(explain_id : Explain_id):
 def load_df():
     #df_app_test = pd.read_csv('source/application_test.csv',sep=',')
     # Chemin absolu vers le répertoire contenant le fichier CSV
-    base_dir = "/code/app"  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
+    base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
 
     # Chemin absolu complet du fichier CSV
 
