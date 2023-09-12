@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ["3.9.13"]
+        python: ["3.9"]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -26,5 +26,5 @@ jobs:
     - name: Test model shap_value
       run: |
         pip install pytest pytest-cov
-        pytest test_shap_value.py 
+        pytest test_shap_value.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
