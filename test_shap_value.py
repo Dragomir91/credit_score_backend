@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 import os
 
-def predict_decision():
+def test_predict_decision():
     
     # Chemin absolu vers le répertoire contenant le fichier CSV
     base_dir = ""  
@@ -85,4 +85,4 @@ def predict_decision():
     
     return pd.DataFrame(tab_shap,index =df.SK_ID_CURR[:100] , columns=top_feature_names[:15])
 
-predict_decision()
+test_predict_decision()
