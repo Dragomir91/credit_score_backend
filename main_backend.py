@@ -69,12 +69,14 @@ async def root():
     """
       
     return HTMLResponse(content=html_content, status_code=200)
+#######################HTML_RESPONSE#################################################
 
 @app.get("/id_client")  
 async def info_client():
     df_kernel = load_df()
     return {"list_id" : list(df_kernel.loc[:101,'SK_ID_CURR']),
             "infos_id" : list(df_kernel.columns[:101])}
+########################ID_CLIENT#######################################################
 
 @app.post("/info_client/id")
 async def info_client2(info_id: Info_id):
@@ -239,9 +241,6 @@ async def predict_decision(explain_id : Explain_id):
     print("Variables les plus importantes :", top_feature_names[:15])
     
     print('paquets reçu exoplain id : ',explain_id) 
-    #df_as_json = pd.DataFrame(tab_shap).to_json(orient='records')
-    #df_as_json = df.to_json(orient='records')
-    
     print(tab_shap.shape,len(df.SK_ID_CURR[:1000]))
 
     
@@ -254,7 +253,6 @@ def load_df():
 
     # Chemin absolu complet du fichier CSV
 
-  
     csv_file_path = os.path.join(base_dir, "preprocessing/kernel_light.csv")
 
     # Vérifier si le fichier existe
@@ -268,14 +266,7 @@ def load_df():
         return print("Le fichier CSV n'existe pas.")
 
 
-
-
-
-df_kernel = load_df()
-
-#df_train = laod_df()
-
-#df_kernel = load_df()
-
-print('fin')   
+if __name__ == '__main__':
+    df_kernel = load_df()
+    print('fin')   
 
