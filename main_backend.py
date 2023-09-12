@@ -73,11 +73,6 @@ async def root():
 @app.get("/id_client")  
 async def info_client():
     df_kernel = load_df()
-    #info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
-    #print(info)
-    #df = {"liste id" :df_kernel.loc[:101,'SK_ID_CURR'].values,
-            #"info_client" : df_kernel.columns[:101].values}
-    #print(pd.DataFrame(df))
     return {"list_id" : list(df_kernel.loc[:101,'SK_ID_CURR']),
             "infos_id" : list(df_kernel.columns[:101])}
 
@@ -134,17 +129,12 @@ async def predict_decision(pred_id : Predict_id):
             'AMT_GOODS_PRICE']   
     
     df = df_kernel.loc[:,cols]
-    print('sk id liste : ',df.SK_ID_CURR)
-    #df.dropna(inplace=True)
-    #print('bef pred id id = ',pred_id.id)
+
     print('df shape : ',df.shape)    
-    print('sk id liste : ',df.SK_ID_CURR)
+
     x = df[df.SK_ID_CURR == pred_id.id].iloc[:,2:]
     print('x = ',x)
     y = df.TARGET
-
-    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)    
-    #rdf.fit(X_train, y_train)
 
     y_pred = rdf.predict(x)
     
@@ -158,7 +148,7 @@ async def predict_decision(pred_id : Predict_id):
 #############################################info_detail_client########################################
 
 
-@app.get("/predict/model_shap") 
+@app.get("/predict/shap_id") 
 async def predict_decision(ex_id : Predict_id):
 
     df_kernel = load_df()
