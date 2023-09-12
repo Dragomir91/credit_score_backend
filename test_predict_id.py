@@ -4,7 +4,7 @@ import pickle
 import os
 
 
-def predict_decision():
+def test_predict_decision():
 
     # Chemin absolu vers le répertoire contenant le fichier CSV
     base_dir = ""  
@@ -65,4 +65,4 @@ def predict_decision():
 
     return 0
 
-predict_decision()
+test_predict_decision()
