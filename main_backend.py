@@ -53,8 +53,6 @@ class Info_id(BaseModel):
 
 app = FastAPI()
 
-
-
 @app.get("/")
 async def root():
     
@@ -164,8 +162,8 @@ async def predict_decision(pred_id : Predict_id):
 async def predict_decision(ex_id : Predict_id):
 
     df_kernel = load_df()
-    
 
+    base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
 
     colonne = []
     
@@ -263,21 +261,20 @@ async def predict_decision(explain_id : Explain_id):
     return pd.DataFrame(tab_shap,index =df.SK_ID_CURR[:100] , columns=top_feature_names[:15])
 	
 def load_df():
- 
+    #df_app_test = pd.read_csv('source/application_test.csv',sep=',')
     # Chemin absolu vers le répertoire contenant le fichier CSV
-    base_dir = ""  
+    base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
 
     # Chemin absolu complet du fichier CSV
 
   
-    csv_file_path = os.path.join(base_dir, "kernel_light.csv")
+    csv_file_path = os.path.join(base_dir, "preprocessing/kernel_light.csv")
 
     # Vérifier si le fichier existe
     if os.path.exists(csv_file_path):
         # Lire le fichier CSV
         df = pd.read_csv(csv_file_path,sep = ',')
         df.drop(columns='index', inplace=True)
-        print('file download')
         
         return df
     else:
@@ -287,9 +284,11 @@ def load_df():
 
 
 
+df_kernel = load_df()
 
-if __name__ == "__main__":
+#df_train = laod_df()
 
-    df_kernel = load_df()
-    print('fin')   
+#df_kernel = load_df()
+
+print('fin')   
 
