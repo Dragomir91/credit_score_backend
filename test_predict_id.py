@@ -62,7 +62,3 @@ def test_predict_decision():
 
     #info_id = Predict_id(id=pred_id.id, decision_id = y_pred, proba=y_pred_proba[0])
 
-
-    return 0
-
-test_predict_decision()
