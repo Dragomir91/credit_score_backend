@@ -53,34 +53,35 @@ class Info_id(BaseModel):
 
 app = FastAPI()
 
-
-
 @app.get("/")
 async def root():
     
     html_content = """
     <html>
         <head>
-            <title>information utilisateur</title>
+            <title>Bienvenue sur score credit</title>
         </head>
         <body>
-            <h1>identifiants clients</h1>
+            <h1>Bienvenue dans le site crédit score</h1>
+            <h2>Ce serveur transmet des information sur la décision d'accordé un credit au client, des informations personnelles sur les clients voulants faire un emprunt.</h2>           
         </body>
     </html>
     """
       
     return HTMLResponse(content=html_content, status_code=200)
 
-@app.get("/id_client")
-async def info_client(info_id: List_id):
-    print('df_ker ______________________________')
+@app.get("/id_client")  
+async def info_client():
     df_kernel = load_df()
-    print('df_ker:', df_kernel)
-    info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
+    #info = List_id(id_client =df_kernel.SK_ID_CURR,information_client =df_kernel.columns)
     #print(info)
-    return info
+    #df = {"liste id" :df_kernel.loc[:101,'SK_ID_CURR'].values,
+            #"info_client" : df_kernel.columns[:101].values}
+    #print(pd.DataFrame(df))
+    return {"list_id" : list(df_kernel.loc[:101,'SK_ID_CURR']),
+            "infos_id" : list(df_kernel.columns[:101])}
 
-@app.post("/id_client/id")
+@app.post("/info_client/id")
 async def info_client2(info_id: Info_id):
     
     df_kernel = load_df()
@@ -171,7 +172,7 @@ async def predict_decision(ex_id : Predict_id):
     with open(csv_file_path,'rb') as f:
         lgbm_model = pickle.load(f)
     
-    shap_ = lgbm_model(df_kernel.iloc[:10,3:],check_additivity=False)
+    shap_ = lgbm_model(df_kernel.iloc[:10,2:],check_additivity=False)
     
     print('shap_value :', shap_.values)
     colonne = []
@@ -283,6 +284,7 @@ def load_df():
     if os.path.exists(csv_file_path):
         # Lire le fichier CSV
         df = pd.read_csv(csv_file_path,sep = ',')
+        df.drop(columns='index', inplace=True)
         
         return df
     else:
