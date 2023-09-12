@@ -167,18 +167,6 @@ async def predict_decision(ex_id : Predict_id):
     
 
 
-    base_dir = "" 
-    csv_file_path = os.path.join(base_dir, "model_lightgbm_explainer.pkl")
-
-    
-    with open(csv_file_path,'rb') as f:
-            rdf = pickle.load(f)
-    print('rdf.explainer:', rdf)    
-
-    shap_ = rdf(df_kernel.iloc[:100,3:],check_additivity=False)
-    
-    print('shap_value :',shap_.values)
-
     colonne = []
     
     for idx,i in enumerate(df_kernel.columns):
@@ -244,7 +232,7 @@ async def predict_decision(explain_id : Explain_id):
 
     # Obtenir les noms des variables
     feature_names = df_kernel.columns
-    feature_names = feature_names[3:]
+    feature_names = feature_names[2:]
 
     print('faet name : ', len(feature_names),sorted_indices[:15], len(shap_values.values))
 
@@ -288,6 +276,7 @@ def load_df():
     if os.path.exists(csv_file_path):
         # Lire le fichier CSV
         df = pd.read_csv(csv_file_path,sep = ',')
+        df.drop(columns='index', inplace=True)
         print('file download')
         
         return df
