@@ -222,7 +222,6 @@ async def predict_decision(explain_id : Explain_id):
 
     print('faet name : ', len(feature_names),sorted_indices[:15], len(shap_values.values))
 
-
     # Obtenir les noms des variables les plus importantes
     top_feature_names = []
     tab_shap = np.ones((100,15))
