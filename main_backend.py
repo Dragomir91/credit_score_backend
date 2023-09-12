@@ -163,8 +163,6 @@ async def predict_decision(ex_id : Predict_id):
 
     df_kernel = load_df()
 
-    base_dir = ""  # Vous devrez peut-être adapter ce chemin en fonction de votre configuration
-
     colonne = []
     
     for idx,i in enumerate(df_kernel.columns):
@@ -275,7 +273,7 @@ def load_df():
         # Lire le fichier CSV
         df = pd.read_csv(csv_file_path,sep = ',')
         df.drop(columns='index', inplace=True)
-        
+        print('dataframe download')
         return df
     else:
         return print("Le fichier CSV n'existe pas.")
