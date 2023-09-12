@@ -34,7 +34,13 @@ jobs:
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+    - name: Test file df_kernel_light
       run: |
-        pytest
+        pip install pytest pytest-cov
+        pytest test_df_kernel_light.py 
+    - name: Test model pipeline imblearn
+      run: |
+        pytest test_predict_id.py 
+    - name: Test model shap_value
+      run: |
+        pytest test_shap_value.py 
