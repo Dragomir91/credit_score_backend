@@ -168,7 +168,7 @@ async def predict_decision(ex_id : Predict_id):
     base_dir = "" 
     csv_file_path = os.path.join(base_dir,'model_lightgbm_explainer.pkl')
 
-    with open(name_model,'rb') as f:
+    with open(csv_file_path,'rb') as f:
 	lgbm_model = pickle.load(f)
 	    
     shap_value = lgbm_model(df.iloc[:10,3:],check_additivity=False)
