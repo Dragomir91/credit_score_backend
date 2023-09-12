@@ -82,7 +82,3 @@ def test_predict_decision():
     print(tab_shap.shape,len(df.SK_ID_CURR[:1000]))
 
     assert len(tab_shap) > 0 
-    
-    return pd.DataFrame(tab_shap,index =df.SK_ID_CURR[:100] , columns=top_feature_names[:15])
-
-test_predict_decision()
