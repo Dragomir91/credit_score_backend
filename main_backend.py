@@ -164,6 +164,15 @@ async def predict_decision(pred_id : Predict_id):
 async def predict_decision(ex_id : Predict_id):
 
     df_kernel = load_df()
+
+    base_dir = "" 
+    csv_file_path = os.path.join(base_dir,'model_lightgbm_explainer.pkl')
+
+    with open(name_model,'rb') as f:
+	lgbm_model = pickle.load(f)
+	    
+    shap_value = lgbm_model(df.iloc[:10,3:],check_additivity=False)
+    print("shap_value = ",shap_value.values)
     colonne = []
     
     for idx,i in enumerate(df_kernel.columns):
