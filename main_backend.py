@@ -69,19 +69,33 @@ async def root():
 #######################HTML_RESPONSE#################################################
 
 @app.get("/id_client")  
-async def info_client():
+async def id_client():
     df_kernel = load_df()
     return {"list_id" : list(df_kernel.loc[:101,'SK_ID_CURR']),
             "infos_id" : list(df_kernel.columns[:101])}
 ########################ID_CLIENT#######################################################
 
-@app.get("/info_client/id")
-async def info_client2(info_id: Info_id):
+@app.get("/info_client")
+async def info_client(info_id: Info_id):
     
     df_kernel = load_df()
     print('id_client = ',  info_id.id_client)
     print('info_client = ',  info_id.infos_id)
     df_id = df_kernel.loc[df_kernel['SK_ID_CURR'] == info_id.id_client,info_id.infos_id]
+
+    print('df_id = ',df_id)  
+    return df_id.to_json()
+
+
+########################ID_CLIENT#######################################################
+
+@app.get("/info_clients/id_all")
+async def info_client2(info_id: Info_id):
+    
+    df_kernel = load_df()
+    print('id_client = ',  info_id.id_client)
+    print('info_client = ',  info_id.infos_id)
+    df_id = df_kernel.loc[:20,info_id.infos_id]
 
     print('df_id = ',df_id)  
     return df_id.to_json()
