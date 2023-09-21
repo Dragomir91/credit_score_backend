@@ -286,7 +286,6 @@ async def predict_decision(cout_id : Predict_id):
     df_test = load_df()    
     df_kernel = load_df_kernel()
     cols= ['SK_ID_CURR',
-           'TARGET',
            'EXT_SOURCE_2',
            'EXT_SOURCE_3',
            'DAYS_BIRTH',
