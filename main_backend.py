@@ -315,7 +315,7 @@ async def predict_decision(cout_id : Predict_id):
     df.fillna(0,inplace=True) 
     # Chemin absolu vers le répertoire contenant le fichier CSV
     rus = RandomUnderSampler()
-    X = df.loc[:,cols[2:]]
+    X = df.loc[:,cols[1:]]
     
     print(df.shape)
     y_pred = model_lightgbm.predict(X)
