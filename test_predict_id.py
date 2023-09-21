@@ -44,20 +44,20 @@ def test_predict_decision():
     
     print(df_kernel)
     
-    cols= [
-        'EXT_SOURCE_2',
-        'EXT_SOURCE_3',
-        'DAYS_BIRTH',
-        'EXT_SOURCE_1',
-        'AMT_ANNUITY',
-        'APPROVED_CNT_PAYMENT_MEAN',
-        'INSTAL_DPD_MEAN',
-        'PAYMENT_RATE',
-        'CODE_GENDER',
-        'INSTAL_AMT_PAYMENT_SUM',
-        'DAYS_EMPLOYED',
-        'AMT_CREDIT',
-        'AMT_GOODS_PRICE']  
+    cols= ['SK_ID_CURR',
+            'EXT_SOURCE_2',
+            'EXT_SOURCE_3',
+            'DAYS_BIRTH',
+            'EXT_SOURCE_1',
+            'AMT_ANNUITY',
+            'APPROVED_CNT_PAYMENT_MEAN',
+            'INSTAL_DPD_MEAN',
+            'PAYMENT_RATE',
+            'CODE_GENDER',
+            'INSTAL_AMT_PAYMENT_SUM',
+            'DAYS_EMPLOYED',
+            'AMT_CREDIT',
+            'AMT_GOODS_PRICE']  
     
     df = df_kernel.loc[:,cols]
     print('sk id liste : ',df.SK_ID_CURR)
