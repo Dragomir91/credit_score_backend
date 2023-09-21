@@ -44,7 +44,6 @@ def test_predict_decision():
     print('sk id liste : ',df.SK_ID_CURR)
     x = df[df.SK_ID_CURR == 100002].iloc[:,1:]
     print('x = ',x)
-    y = df.TARGET
 
     #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)    
     #rdf.fit(X_train, y_train)
