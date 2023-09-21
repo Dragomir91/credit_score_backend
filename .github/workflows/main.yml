@@ -26,13 +26,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements_test.txt 
-    - name: Test model df kernel light
+    - name: Test les fonctions du fichier main_backend
       run: |
         pip install pytest pytest-cov
-        pytest test_df_kernel_light.py 
-    - name: Test model predict id
-      run: |
-        pytest test_predict_id.py 
-    - name: Test model shap_value
-      run: |
-        pytest test_shap_value.py 
+        pytest test_fonctions.py
