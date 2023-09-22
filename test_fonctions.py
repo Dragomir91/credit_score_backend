@@ -60,5 +60,3 @@ def test_predict_decision():
     print('proba id : ', y_pred_proba)
     assert (y_pred_proba[0] > 0 and y_pred_proba[0] <= 1) 
     assert (y_pred_proba[1] > 0 and y_pred_proba[1] <= 1) 
-
-#####

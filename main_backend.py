@@ -110,7 +110,7 @@ async def info_client2(info_id: Info_id):
 @app.post("/predict") 
 async def predict_decision(pred_id : Predict_id):
 
-    df_app_test = load_df()
+    df_kernel = load_df()
 
     base_dir = "" 
     csv_file_path = os.path.join(base_dir, "model_lightgbm.pkl")
@@ -120,7 +120,7 @@ async def predict_decision(pred_id : Predict_id):
             model_lightgbm = pickle.load(f)
     print(pred_id)       
     
-    print(df_app_test)
+    print(df_kernel)
     
 
 
@@ -139,7 +139,7 @@ async def predict_decision(pred_id : Predict_id):
         'AMT_CREDIT',
         'AMT_GOODS_PRICE']  
     
-    df = df_app_test
+    df = df_kernel.loc[:,:]
 
     print('df shape : ',df.shape)    
 
@@ -286,7 +286,7 @@ async def predict_decision(cout_id : Predict_id):
     df_test = load_df()    
     df_kernel = load_df_kernel()
     cols= ['SK_ID_CURR',
-           'EXT_SOURCE_2',
+         'EXT_SOURCE_2',
            'EXT_SOURCE_3',
            'DAYS_BIRTH',
            'EXT_SOURCE_1',
@@ -315,8 +315,13 @@ async def predict_decision(cout_id : Predict_id):
     df.fillna(0,inplace=True) 
     # Chemin absolu vers le répertoire contenant le fichier CSV
     rus = RandomUnderSampler()
-    X = df.loc[:,cols[2:]]
+    X,y = df.loc[:,cols[1:]], df_kernel.TARGET
     
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+
+    df_sample = pd.DataFrame(df.loc[y_test.index])
+
+
     print(df.shape)
     y_pred = model_lightgbm.predict(X)
     print(len(y_pred))
