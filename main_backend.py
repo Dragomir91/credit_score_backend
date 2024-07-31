@@ -64,8 +64,8 @@ async def root():
             <title>Bienvenue sur score credit</title>
         </head>
         <body>
-            <h1>Bienvenue dans le site crédit score</h1>
-            <h2>Ce serveur transmet des information sur la décision d'accordé un credit au client, des informations personnelles sur les clients voulants faire un emprunt.</h2>           
+            <h1>Bienvenue sur le projet crédit score</h1>
+            <h2>Ce serveur transmet des information sur la décision d'accordé un credit bancaire.</h2>           
         </body>
     </html>
     """
@@ -99,7 +99,7 @@ async def info_client2(info_id: Info_id):
                    annuity = df_id.AMT_ANNUITY)
     print(info)  
     return info
-
+	
 ####################################PREDICT_ID#############################################
 
 @app.post("/predict") 
@@ -108,15 +108,11 @@ async def predict_decision(pred_id : Predict_id):
     df_kernel = load_df()
 
     base_dir = "" 
+# Charge le modèle lightgbm
     csv_file_path = os.path.join(base_dir, "model_lightgbm.pkl")
-
-    
     with open(csv_file_path,'rb') as f:
             rdf = pickle.load(f)
-    print(pred_id)       
-    
-    print(df_kernel)
-    
+# Variable retenu pour la prédiction d'un enprunt bancaire
     cols= ['TARGET',
            'SK_ID_CURR',
             'EXT_SOURCE_2',
@@ -136,36 +132,22 @@ async def predict_decision(pred_id : Predict_id):
             'AMT_GOODS_PRICE']   
     
     df = df_kernel.loc[:,cols]
-    print('sk id liste : ',df.SK_ID_CURR)
-    #df.dropna(inplace=True)
-    #print('bef pred id id = ',pred_id.id)
-    print('df shape : ',df.shape)    
-    print('sk id liste : ',df.SK_ID_CURR)
     x = df[df.SK_ID_CURR == pred_id.id].iloc[:,2:]
-    print('x = ',x)
     y = df.TARGET
-
-    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)    
-    #rdf.fit(X_train, y_train)
-
-    y_pred = rdf.predict(x)
-    
+    y_pred = rdf.predict(x)    
+# Predcition du score de probabilité obtenu pour le client
     y_pred_proba = rdf.predict_proba(x)[0]
-    print('proba id : ', y_pred_proba)
     info_id = Predict_id(id=pred_id.id, decision_id = y_pred, proba=y_pred_proba[0])
-    print(info_id)
 
     return info_id
 
-#############################################info_detail_client########################################
-
-
+#############################################information_detail_client########################################
+# Information personnel du client 
 @app.get("/predict/model_shap") 
 async def predict_decision(ex_id : Predict_id):
 
     df_kernel = load_df()
-    colonne = []
-    
+    colonne = []   
     for idx,i in enumerate(df_kernel.columns):
         colonne.append(i.replace(' ','_').replace(':','_').replace('-','_').replace('/','_').replace(',','_'))
         
@@ -173,8 +155,6 @@ async def predict_decision(ex_id : Predict_id):
     df_kernel = df_kernel.fillna(0)
     df_kernel = df_kernel.replace([np.inf, -np.inf], np.nan)
 
-    print(df_kernel.loc[df_kernel.SK_ID_CURR == ex_id.id].iloc[:,:15].values)
-    
     cols= ['TARGET',
             'SK_ID_CURR',
             'EXT_SOURCE_2',
@@ -196,9 +176,8 @@ async def predict_decision(ex_id : Predict_id):
     print(df_kernel.loc[df_kernel.SK_ID_CURR== ex_id.id,cols])
     return df_kernel.loc[df_kernel.SK_ID_CURR==ex_id.id,cols].to_json()
 
-
 #########################################EXPLAIN_SHAP_VALUES###########################################
-
+# Explication des données (variables)  permettant d'expliquer le choix d'accorder ou non le crédit (colonnes<->infromation personnel du demandeu)
 @app.get("/predict/explain") 
 async def predict_decision(explain_id : Explain_id):
     
@@ -218,7 +197,6 @@ async def predict_decision(explain_id : Explain_id):
     # Chemin absolu complet du fichier CSV
     csv_file_path = os.path.join(base_dir, "model_lightgbm_shap.pkl")
 
-    print(csv_file_path)
     with open(csv_file_path,'rb') as f:
             shap_values = pickle.load(f)
             
@@ -231,9 +209,6 @@ async def predict_decision(explain_id : Explain_id):
     feature_names = df_kernel.columns
     feature_names = feature_names[3:]
 
-    print('faet name : ', len(feature_names),sorted_indices[:15], len(shap_values.values))
-
-
     # Obtenir les noms des variables les plus importantes
     top_feature_names = []
     tab_shap = np.ones((100,15))
@@ -244,32 +219,17 @@ async def predict_decision(explain_id : Explain_id):
         for j in range(0,15):
             #for idx in sorted_indices:
             tab_shap[i][j] = shap_values.values[i][sorted_indices[j]]
-            
-    print('i : ',list(tab_shap[0]))
-    
-    print('idx : ', sorted_indices[:15])
-    print("Variables les plus importantes :", top_feature_names[:15])
-    
-    print('paquets reçu exoplain id : ',explain_id) 
-    #df_as_json = pd.DataFrame(tab_shap).to_json(orient='records')
-    #df_as_json = df.to_json(orient='records')
-    
-    print(tab_shap.shape,len(df.SK_ID_CURR[:1000]))
 
-    
     return pd.DataFrame(tab_shap,index =df.SK_ID_CURR[:100] , columns=top_feature_names[:15])
 	
 def load_df():
  
-    # Chemin absolu vers le répertoire contenant le fichier CSV
+# Chemin absolu vers le répertoire contenant le fichier CSV
     base_dir = ""  
-
-    # Chemin absolu complet du fichier CSV
-
-  
+# Chemin absolu complet du fichier CSV  
     csv_file_path = os.path.join(base_dir, "kernel_light.csv")
-
-    # Vérifier si le fichier existe
+	
+# Vérifier si le fichier existe
     if os.path.exists(csv_file_path):
         # Lire le fichier CSV
         df = pd.read_csv(csv_file_path,sep = ',')
@@ -279,13 +239,6 @@ def load_df():
     else:
         return print("Le fichier CSV n'existe pas.")
 
-
-
-
-
-
 if __name__ == "__main__":
 
     df_kernel = load_df()
-    print('fin')   
-
